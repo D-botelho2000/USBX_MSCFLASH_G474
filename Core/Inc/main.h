@@ -51,12 +51,39 @@ extern "C" {
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
+void MX_USB_PCD_Init(void);
 
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define JOYSTICK_SEL_Pin GPIO_PIN_13
+#define JOYSTICK_SEL_GPIO_Port GPIOC
+#define SPI1_CS_Pin GPIO_PIN_4
+#define SPI1_CS_GPIO_Port GPIOA
+#define JOYSTICK_LEFT_Pin GPIO_PIN_4
+#define JOYSTICK_LEFT_GPIO_Port GPIOC
+#define JOYSTICK_DOWN_Pin GPIO_PIN_5
+#define JOYSTICK_DOWN_GPIO_Port GPIOC
+#define LED_ORANGE_Pin GPIO_PIN_1
+#define LED_ORANGE_GPIO_Port GPIOB
+#define JOYSTICK_RIGHT_Pin GPIO_PIN_2
+#define JOYSTICK_RIGHT_GPIO_Port GPIOB
+#define JOYSTICK_UP_Pin GPIO_PIN_10
+#define JOYSTICK_UP_GPIO_Port GPIOB
+#define BUCK_RED_DRIVE_Pin GPIO_PIN_6
+#define BUCK_RED_DRIVE_GPIO_Port GPIOC
+#define BUCK_GREEN_DRIVE_Pin GPIO_PIN_8
+#define BUCK_GREEN_DRIVE_GPIO_Port GPIOC
+#define BUCK_BLUE_DRIVE_Pin GPIO_PIN_8
+#define BUCK_BLUE_DRIVE_GPIO_Port GPIOA
+#define LED_BLUE_Pin GPIO_PIN_15
+#define LED_BLUE_GPIO_Port GPIOA
+#define LED_RED_Pin GPIO_PIN_5
+#define LED_RED_GPIO_Port GPIOB
+#define LED_GREEN_Pin GPIO_PIN_7
+#define LED_GREEN_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
