@@ -33,6 +33,7 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "main.h"
+#include "usb.h"
 #include "ux_dcd_stm32.h"
 /* USER CODE END Includes */
 
