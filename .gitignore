@@ -4,5 +4,5 @@
 *.hex
 
 # Debug folder
-//Debug
-//Release
+Debug/
+Release/
