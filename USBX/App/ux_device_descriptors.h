@@ -258,7 +258,7 @@ uint16_t USBD_Get_Configuration_Number(uint8_t class_type, uint8_t interface_typ
 #define USBD_STRING_FRAMEWORK_MAX_LENGTH              256U
 
 /* Device Storage Class */
-#define USBD_MSC_EPOUT_ADDR                           0x02U
+#define USBD_MSC_EPOUT_ADDR                           0x01U
 #define USBD_MSC_EPIN_ADDR                            0x81U
 #define USBD_MSC_EPOUT_FS_MPS                         64U
 #define USBD_MSC_EPOUT_HS_MPS                         512U

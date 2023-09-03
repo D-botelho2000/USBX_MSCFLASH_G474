@@ -1,21 +1,21 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file    app_usbx_device.c
-  * @author  MCD Application Team
-  * @brief   USBX Device applicative file
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2020-2021 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    app_usbx_device.c
+ * @author  MCD Application Team
+ * @brief   USBX Device applicative file
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2020-2021 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
@@ -49,7 +49,7 @@ static UX_SLAVE_CLASS_STORAGE_PARAMETER storage_parameter;
 static TX_THREAD ux_device_app_thread;
 
 /* USER CODE BEGIN PV */
-
+extern PCD_HandleTypeDef hpcd_USB_FS;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -86,7 +86,8 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
                        USBX_DEVICE_MEMORY_STACK_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
     /* USER CODE BEGIN USBX_ALLOCATE_STACK_ERORR */
-    return TX_POOL_ERROR;
+		while(1);
+		return TX_POOL_ERROR;
     /* USER CODE END USBX_ALLOCATE_STACK_ERORR */
   }
 
@@ -94,7 +95,8 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
   if (ux_system_initialize(pointer, USBX_DEVICE_MEMORY_STACK_SIZE, UX_NULL, 0) != UX_SUCCESS)
   {
     /* USER CODE BEGIN USBX_SYSTEM_INITIALIZE_ERORR */
-    return UX_ERROR;
+		while(1);
+		return UX_ERROR;
     /* USER CODE END USBX_SYSTEM_INITIALIZE_ERORR */
   }
 
@@ -124,7 +126,8 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
                                  UX_NULL) != UX_SUCCESS)
   {
     /* USER CODE BEGIN USBX_DEVICE_INITIALIZE_ERORR */
-    return UX_ERROR;
+		while(1);
+		return UX_ERROR;
     /* USER CODE END USBX_DEVICE_INITIALIZE_ERORR */
   }
 
@@ -184,7 +187,8 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
                                      &storage_parameter) != UX_SUCCESS)
   {
     /* USER CODE BEGIN USBX_DEVICE_STORAGE_REGISTER_ERORR */
-    return UX_ERROR;
+		while(1);
+		return UX_ERROR;
     /* USER CODE END USBX_DEVICE_STORAGE_REGISTER_ERORR */
   }
 
@@ -193,7 +197,8 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
                        TX_NO_WAIT) != TX_SUCCESS)
   {
     /* USER CODE BEGIN MAIN_THREAD_ALLOCATE_STACK_ERORR */
-    return TX_POOL_ERROR;
+		while(1);
+		return TX_POOL_ERROR;
     /* USER CODE END MAIN_THREAD_ALLOCATE_STACK_ERORR */
   }
 
@@ -204,7 +209,8 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
                        UX_DEVICE_APP_THREAD_START_OPTION) != TX_SUCCESS)
   {
     /* USER CODE BEGIN MAIN_THREAD_CREATE_ERORR */
-    return TX_THREAD_ERROR;
+		while(1);
+		return TX_THREAD_ERROR;
     /* USER CODE END MAIN_THREAD_CREATE_ERORR */
   }
 
@@ -223,7 +229,17 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
 static VOID app_ux_device_thread_entry(ULONG thread_input)
 {
   /* USER CODE BEGIN app_ux_device_thread_entry */
-  TX_PARAMETER_NOT_USED(thread_input);
+	MX_USB_PCD_Init();
+
+	HAL_PCDEx_PMAConfig(&hpcd_USB_FS, 0x00, PCD_SNG_BUF, 0x14);
+	HAL_PCDEx_PMAConfig(&hpcd_USB_FS, 0x80, PCD_SNG_BUF, 0x54);
+
+	HAL_PCDEx_PMAConfig(&hpcd_USB_FS, 0x01, PCD_SNG_BUF, 0x94);
+	HAL_PCDEx_PMAConfig(&hpcd_USB_FS, 0x81, PCD_SNG_BUF, 0xD4);
+
+	ux_dcd_stm32_initialize((ULONG) USB, (ULONG)&hpcd_USB_FS);
+
+	HAL_PCD_Start(&hpcd_USB_FS);
   /* USER CODE END app_ux_device_thread_entry */
 }
 
